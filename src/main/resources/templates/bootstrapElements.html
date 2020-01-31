@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Фрагменты</title>
+    <div th:fragment="header()">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}">
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+        <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" >
+        <link rel="stylesheet" type="text/css" href="/static/css/styles.css" th:href="@{/css/styles.css}">
+    </div>
+</head>
+
+<body>
+    // Фрагмент для простого текстового поля
+    <div th:fragment="simple-text-field(textFieldId, prependText)">
+        <div class="input-group mb-2">
+            <div class="input-group-prepend">
+                <span class="input-group-text" th:text="${prependText}"></span>
+            </div>
+            <input class="form-control" th:id="${textFieldId}" type="text"/>
+        </div>
+    </div>
+
+    // Фрагмент для текстового поля с невозможностью редактирования
+    <div th:fragment="simple-text-field-readonly(textFieldId, prependText)">
+        <div class="input-group mb-2">
+            <div class="input-group-prepend">
+                <span class="input-group-text" th:text="${prependText}"></span>
+            </div>
+            <input class="form-control" th:id="${textFieldId}" type="text" readonly/>
+        </div>
+    </div>
+    // Фрагмент для текстового поля с невозможностью редактирования
+    <div th:fragment="simple-text-field-with-value (textFieldId, prependText, defaultValue)">
+        <div class="input-group mb-2">
+            <div class="input-group-prepend">
+                <span class="input-group-text" th:text="${prependText}"></span>
+            </div>
+            <input class="form-control" th:id="${textFieldId}" type="text" th:value="${defaultValue}"/>
+        </div>
+    </div>
+    // Фрагмент для текстового поля с невозможностью редактирования
+    <div th:fragment="simple-text-field-readonly-with-value(textFieldId, prependText, defaultValue)">
+        <div class="input-group mb-2">
+            <div class="input-group-prepend">
+                <span class="input-group-text" th:text="${prependText}"></span>
+            </div>
+            <input class="form-control" th:id="${textFieldId}" type="text" th:value="${defaultValue}" readonly/>
+        </div>
+    </div>
+
+    // Фрагмент для многострочного текстового поля
+    <div th:fragment="simple-textarea-field(textAreaId, prependText)">
+        <div class="input-group mb-2">
+            <div class="input-group-prepend">
+                <span class="input-group-text" th:text="${prependText}"></span>
+            </div>
+            <textarea class="form-control" th:id="${textAreaId}" type="text"></textarea>
+        </div>
+    </div>
+
+    // Фрагмент для многострочного текстового поля cо значением
+    <div th:fragment="simple-textarea-field-with-value (textAreaId, prependText, defaultValue)">
+        <div class="input-group mb-2">
+            <div class="input-group-prepend">
+                <span class="input-group-text" th:text="${prependText}"></span>
+            </div>
+            <textarea class="form-control" th:id="${textAreaId}" type="text" th:text="${defaultValue}"></textarea>
+        </div>
+    </div>
+
+    <textarea></textarea>
+
+    // Фрагмент для простых выпадающих списков, сформированных из перечислений
+    <div th:fragment="simple-dropdown-enum(enum, prependText, id, defaultValue)" class="input-group mb-2">
+        <div class="input-group-prepend">
+            <span class="input-group-text" th:text="${prependText}"></span>
+        </div>
+        <select class="form-control" th:id="${id}">
+            <option th:if="${defaultValue == 'Квартира'}" th:text="${defaultValue}" th:value="1.7"></option>
+            <option th:if="${defaultValue == 'Дом'}" th:text="${defaultValue}" th:value="1.5"></option>
+            <option th:if="${defaultValue == 'Комната'}" th:text="${defaultValue}" th:value="1.3"></option>
+            <option th:each="enumItem : ${enum}" th:text="${enumItem.getText()}" th:value="${enumItem.getValue()}"></option>
+        </select>
+    </div>
+
+    // Фрагмент для простых выпадающих списков, сформированных из списков (List)
+    <div th:fragment="simple-dropdown-list(list, prependText, id, defaultValue)" class="input-group mb-2">
+        <div class="input-group-prepend">
+            <span class="input-group-text" th:text="${prependText}"></span>
+        </div>
+        <select class="form-control" th:id="${id}">
+            <option th:text="${defaultValue}"></option>
+            <option th:each="listItem : ${list}" th:text="${listItem}" th:value="${listItem}"></option>
+        </select>
+    </div>
+
+    // Фрагмент для поля выбора даты
+    <div th:fragment="simple-data-field(prependText, id, defaultValue)" class="input-group mb-2">
+        <div class="input-group mb-2">
+            <div class="input-group-prepend">
+                <span class="input-group-text" th:text="${prependText}"></span>
+            </div>
+            <input class="form-control" th:id="${id}" type="date" th:value="${defaultValue}"/>
+        </div>
+    </div>
+
+    // Фрагмент для поля даты с невозможностью редактирования
+    <div th:fragment="simple-data-field-readonly(prependText, id, defaultValue)" class="input-group mb-2">
+        <div class="input-group mb-2">
+            <div class="input-group-prepend">
+                <span class="input-group-text" th:text="${prependText}"></span>
+            </div>
+            <input class="form-control" th:id="${id}" type="date" th:value="${defaultValue}" readonly/>
+        </div>
+    </div>
+
+    // Редактирование пользователя
+    <div th:fragment="user-edit()">
+        <div class="modal fade" id="editUserModal" tabindex="-1" role="dialog" aria-labelledby="editUserModalTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editUserModalTitle">Клиент</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-2">
+                                <div th:replace="bootstrapElements::simple-text-field-readonly ('userId', 'ID')"></div>
+                            </div>
+                            <div class="col-4">
+                                <div th:replace="bootstrapElements::simple-text-field ('editUserLogin', 'Логин')"></div>
+                            </div>
+                            <div class="col-4">
+                                <div th:replace="bootstrapElements::simple-text-field-readonly ('editUserPassword', 'Пароль')"></div>
+                            </div>
+                            <div class="col-2">
+                                <div th:replace="bootstrapElements::simple-text-field-readonly ('editUserEnabled', 'Статус')"></div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="editSaveUser" type="button" class="btn btn-primary" data-dismiss="modal">Сохранить</button>
+                        <button id="deleteUser" type="button" class="btn btn-warning" data-dismiss="modal">Удалить</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Отменить</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    // Редактирование текста сообщения
+    <div th:fragment="message-edit()">
+        <div class="modal fade" id="editMessageModal" tabindex="-1" role="dialog" aria-labelledby="editMessageModalTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editMessageModalTitle">Клиент</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-2">
+                                <div th:replace="bootstrapElements::simple-text-field-readonly ('messageId', 'ID')"></div>
+                            </div>
+                            <div class="col-10">
+                                <div th:replace="bootstrapElements::simple-text-field ('newContent', 'Текст сообщения')"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="editMessageUser" type="button" class="btn btn-primary" data-dismiss="modal">Сохранить</button>
+                        <button id="deleteMessage" type="button" class="btn btn-warning" data-dismiss="modal">Удалить</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Отменить</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:fragment="footer()">
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
+        <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/plug-ins/1.10.20/i18n/Russian.json"></script>
+        <script src="/webjars/sockjs-client/1.0.2/sockjs.js"></script>
+        <script src="/webjars/stomp-websocket/2.3.3/stomp.min.js"></script>
+        <script th:src="@{/js/app.js}" src="/static/js/app.js"></script>
+    </div>
+</body>
+</html>

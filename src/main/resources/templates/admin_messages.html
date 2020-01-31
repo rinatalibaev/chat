@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title>Страница администратора</title>
+    <div th:replace="bootstrapElements::header"></div>
+</head>
+<body>
+<h1 th:inline="text">Панель администрирования</h1>
+<a href="/logout">
+    <input type="submit" value="Выйти"/>
+</a>
+<a href="/">
+    <input type="submit" value="На главную"/>
+</a>
+<div th:replace="bootstrapElements::message-edit"></div>
+<div class="container-fluid my-3" style="width: 90%">
+    <div class="card text-center">
+        <div class="card-header">
+            <ul class="nav nav-tabs card-header-tabs">
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin">Пользователи</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="/admin/messages">Сообщения</a>
+                </li>
+            </ul>
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">Редактирование сообщений</h5>
+            <p class="card-text">Для редактирования нажмите на строку</p>
+            <table id="messagesTable" class="table table-bordered table-responsive-lg">
+                <thead>
+                <th style="width: 10%">ID</th>
+                <th style="width: 20%">Отправитель</th>
+                <th style="width: 20%">Получатель</th>
+                <th style="width: 50%">Текст</th>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div th:replace="bootstrapElements::footer"></div>
+<script th:src="@{/js/admin.js}" src="/static/js/admin.js"></script>
+</body>
+</html>

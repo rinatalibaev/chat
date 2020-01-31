@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>Основная страница</title>
+    <div th:replace="bootstrapElements::header"></div>
+</head>
+
+<body>
+    <h2 th:inline="text">Вы вошли как [[${#httpServletRequest.remoteUser}]]</h2>
+    <a href="/logout">
+        <input type="submit" value="Выйти"/>
+    </a>
+    <a th:if="${userIsAdmin}" href="/admin">
+        <input type="submit" value="Панель админа"/>
+    </a>
+
+    <div class="container-fluid my-3" style="width: 80%">
+        <div class="card">
+            <div class="card-header">
+                <h3>Чат</h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-11 mx-0 px-0" th:include="bootstrapElements::simple-textarea-field('message', 'Сообщение')"></div>
+                    <div class="col-1 mx-0 px-0">
+                        <button id="send-message-button" type="button" class="btn btn-primary w-100">Отправить</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div th:replace="bootstrapElements::simple-dropdown-list (${usersList}, 'Выбрать получателя', 'toUser', '')"></div>
+                </div>
+                <textarea id="chatTextArea" class="h-75 w-100" disabled></textarea>
+            </div>
+            <div class="card-footer">
+
+            </div>
+        </div>
+
+    </div>
+
+    <div th:replace="bootstrapElements::footer"></div>
+    <script>
+        var currentUser = "[[${#httpServletRequest.remoteUser}]]";
+    </script>
+    </body>
+</html>
